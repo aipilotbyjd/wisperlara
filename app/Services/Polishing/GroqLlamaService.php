@@ -11,11 +11,15 @@ class GroqLlamaService implements PolishingProviderInterface
 
     public function __construct()
     {
-        $this->apiKey = config('services.groq.api_key');
+        $this->apiKey = config('services.groq.api_key') ?? '';
     }
 
     public function polish(string $text, string $prompt): array
     {
+        if (empty($this->apiKey)) {
+            throw new \Exception('Groq API key not configured');
+        }
+
         $response = Http::withToken($this->apiKey)
             ->post("{$this->baseUrl}/chat/completions", [
                 'model' => 'llama-3.1-8b-instant',

@@ -12,7 +12,7 @@ class DeepgramService implements TranscriptionProviderInterface
 
     public function __construct()
     {
-        $this->apiKey = config('services.deepgram.api_key');
+        $this->apiKey = config('services.deepgram.api_key') ?? '';
     }
 
     public function transcribe(UploadedFile $audio, ?string $language = null, array $dictionary = []): array
@@ -31,6 +31,10 @@ class DeepgramService implements TranscriptionProviderInterface
 
         if (!empty($dictionary)) {
             $queryParams['keywords'] = implode(',', array_slice($dictionary, 0, 50));
+        }
+
+        if (empty($this->apiKey)) {
+            throw new \Exception('Deepgram API key not configured');
         }
 
         $response = Http::withToken($this->apiKey)

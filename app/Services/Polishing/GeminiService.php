@@ -11,11 +11,15 @@ class GeminiService implements PolishingProviderInterface
 
     public function __construct()
     {
-        $this->apiKey = config('services.gemini.api_key');
+        $this->apiKey = config('services.gemini.api_key') ?? '';
     }
 
     public function polish(string $text, string $prompt): array
     {
+        if (empty($this->apiKey)) {
+            throw new \Exception('Gemini API key not configured');
+        }
+
         $response = Http::post("{$this->baseUrl}/models/gemini-1.5-flash:generateContent?key={$this->apiKey}", [
             'contents' => [
                 [

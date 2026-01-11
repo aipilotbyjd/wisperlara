@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\TranscriptionResource;
 use App\Models\Transcription;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class HistoryController extends Controller
 {
+    use AuthorizesRequests;
     public function index(Request $request): AnonymousResourceCollection
     {
         $query = $request->user()->transcriptions()->latest();

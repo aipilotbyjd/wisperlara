@@ -11,11 +11,15 @@ class OpenAIService implements PolishingProviderInterface
 
     public function __construct()
     {
-        $this->apiKey = config('services.openai.api_key');
+        $this->apiKey = config('services.openai.api_key') ?? '';
     }
 
     public function polish(string $text, string $prompt): array
     {
+        if (empty($this->apiKey)) {
+            throw new \Exception('OpenAI API key not configured');
+        }
+
         $response = Http::withToken($this->apiKey)
             ->post("{$this->baseUrl}/chat/completions", [
                 'model' => 'gpt-4o-mini',

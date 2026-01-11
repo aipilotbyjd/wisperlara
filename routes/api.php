@@ -51,19 +51,19 @@ Route::middleware(['auth:api', 'rate.limit.plan'])->group(function () {
     Route::get('/usage/history', [UsageController::class, 'history']);
 
     // Dictionary
-    Route::apiResource('dictionary', DictionaryController::class);
     Route::post('/dictionary/import', [DictionaryController::class, 'import']);
     Route::get('/dictionary/export', [DictionaryController::class, 'export']);
+    Route::apiResource('dictionary', DictionaryController::class);
 
     // Commands
-    Route::apiResource('commands', CommandController::class);
     Route::post('/commands/{command}/toggle', [CommandController::class, 'toggle']);
+    Route::apiResource('commands', CommandController::class);
 
     // Snippets
-    Route::apiResource('snippets', SnippetController::class);
-    Route::post('/snippets/{snippet}/toggle', [SnippetController::class, 'toggle']);
     Route::post('/snippets/import', [SnippetController::class, 'import']);
     Route::get('/snippets/export', [SnippetController::class, 'export']);
+    Route::post('/snippets/{snippet}/toggle', [SnippetController::class, 'toggle']);
+    Route::apiResource('snippets', SnippetController::class);
 
     // Styles
     Route::get('/styles', [StyleController::class, 'index']);

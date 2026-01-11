@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommandRequest;
 use App\Http\Resources\CommandResource;
 use App\Models\CustomCommand;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CommandController extends Controller
 {
+    use AuthorizesRequests;
     public function index(Request $request): AnonymousResourceCollection
     {
         return CommandResource::collection(

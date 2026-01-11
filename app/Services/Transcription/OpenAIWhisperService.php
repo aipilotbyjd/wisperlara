@@ -12,11 +12,15 @@ class OpenAIWhisperService implements TranscriptionProviderInterface
 
     public function __construct()
     {
-        $this->apiKey = config('services.openai.api_key');
+        $this->apiKey = config('services.openai.api_key') ?? '';
     }
 
     public function transcribe(UploadedFile $audio, ?string $language = null, array $dictionary = []): array
     {
+        if (empty($this->apiKey)) {
+            throw new \Exception('OpenAI API key not configured');
+        }
+
         $response = Http::withToken($this->apiKey)
             ->attach('file', file_get_contents($audio->path()), $audio->getClientOriginalName())
             ->post("{$this->baseUrl}/audio/transcriptions", array_filter([

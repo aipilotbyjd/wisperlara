@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SnippetRequest;
 use App\Http\Resources\SnippetResource;
 use App\Models\Snippet;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class SnippetController extends Controller
 {
+    use AuthorizesRequests;
     public function index(Request $request): AnonymousResourceCollection
     {
         $query = $request->user()->snippets();
