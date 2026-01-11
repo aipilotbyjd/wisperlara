@@ -12,7 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'check.usage' => \App\Http\Middleware\CheckUsageLimit::class,
+            'track.usage' => \App\Http\Middleware\TrackUsage::class,
+            'rate.limit.plan' => \App\Http\Middleware\RateLimitByPlan::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -35,4 +35,25 @@ return [
         ],
     ],
 
+    // STT Providers
+    'groq' => [
+        'api_key' => env('GROQ_API_KEY'),
+    ],
+
+    'openai' => [
+        'api_key' => env('OPENAI_API_KEY'),
+    ],
+
+    'deepgram' => [
+        'api_key' => env('DEEPGRAM_API_KEY'),
+    ],
+
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY'),
+    ],
+
+    // Default providers
+    'default_transcription_provider' => env('DEFAULT_TRANSCRIPTION_PROVIDER', 'groq'),
+    'default_polishing_provider' => env('DEFAULT_POLISHING_PROVIDER', 'gemini'),
+
 ];

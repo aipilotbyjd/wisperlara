@@ -1,0 +1,1036 @@
+{
+  "info": {
+    "name": "Wishper Pro API",
+    "description": "Complete API collection for Wishper Pro - Voice Transcription SaaS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://wisperlara.test/api"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('access_token', jsonData.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\"\n}"
+            },
+            "url": "{{base_url}}/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('access_token', jsonData.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}"
+            },
+            "url": "{{base_url}}/auth/login"
+          }
+        },
+        {
+          "name": "Get User",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/auth/user"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"first_name\": \"John\",\n    \"last_name\": \"Smith\"\n}"
+            },
+            "url": "{{base_url}}/auth/user"
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"current_password\": \"password123\",\n    \"password\": \"newpassword123\",\n    \"password_confirmation\": \"newpassword123\"\n}"
+            },
+            "url": "{{base_url}}/auth/change-password"
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('access_token', jsonData.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/auth/refresh"
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "auth": {"type": "noauth"},
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"john@example.com\"\n}"
+            },
+            "url": "{{base_url}}/auth/forgot-password"
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "auth": {"type": "noauth"},
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"token\": \"reset-token-here\",\n    \"email\": \"john@example.com\",\n    \"password\": \"newpassword123\",\n    \"password_confirmation\": \"newpassword123\"\n}"
+            },
+            "url": "{{base_url}}/auth/reset-password"
+          }
+        },
+        {
+          "name": "Verify Email",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/auth/verify-email"
+          }
+        },
+        {
+          "name": "Resend Verification",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/auth/resend-verification"
+          }
+        },
+        {
+          "name": "Delete Account",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"password\": \"password123\"\n}"
+            },
+            "url": "{{base_url}}/auth/account"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transcription",
+      "item": [
+        {
+          "name": "Transcribe Audio",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {"key": "file", "type": "file", "src": ""},
+                {"key": "language", "value": "en", "type": "text"},
+                {"key": "provider", "value": "groq", "type": "text", "description": "groq, openai, deepgram"}
+              ]
+            },
+            "url": "{{base_url}}/transcribe"
+          }
+        },
+        {
+          "name": "Polish Text",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"text\": \"um so like I was thinking you know that we should um basically start the meeting\",\n    \"style\": \"formal\",\n    \"context\": \"com.apple.mail\",\n    \"provider\": \"gemini\"\n}"
+            },
+            "url": "{{base_url}}/polish"
+          }
+        },
+        {
+          "name": "Transcribe and Polish",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {"key": "file", "type": "file", "src": ""},
+                {"key": "language", "value": "en", "type": "text"},
+                {"key": "style", "value": "casual", "type": "text", "description": "formal, casual, extremely_casual"},
+                {"key": "context", "value": "com.slack.Slack", "type": "text"},
+                {"key": "transcription_provider", "value": "groq", "type": "text"},
+                {"key": "polishing_provider", "value": "gemini", "type": "text"}
+              ]
+            },
+            "url": "{{base_url}}/transcribe-and-polish"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dictionary",
+      "item": [
+        {
+          "name": "List Words",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": {
+              "raw": "{{base_url}}/dictionary?category=names&search=",
+              "host": ["{{base_url}}"],
+              "path": ["dictionary"],
+              "query": [
+                {"key": "category", "value": "names"},
+                {"key": "search", "value": ""},
+                {"key": "per_page", "value": "50"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Word",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"word\": \"Jaydeep\",\n    \"category\": \"names\",\n    \"pronunciation\": \"jay-deep\"\n}"
+            },
+            "url": "{{base_url}}/dictionary"
+          }
+        },
+        {
+          "name": "Get Word",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/dictionary/1"
+          }
+        },
+        {
+          "name": "Update Word",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"word\": \"Jaydeep\",\n    \"category\": \"names\",\n    \"pronunciation\": \"JAY-deep\"\n}"
+            },
+            "url": "{{base_url}}/dictionary/1"
+          }
+        },
+        {
+          "name": "Delete Word",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/dictionary/1"
+          }
+        },
+        {
+          "name": "Import Words",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"words\": [\n        {\"word\": \"TensorFlow\", \"category\": \"tech\"},\n        {\"word\": \"Kubernetes\", \"category\": \"tech\"},\n        {\"word\": \"PostgreSQL\", \"category\": \"tech\", \"pronunciation\": \"post-gres-Q-L\"}\n    ]\n}"
+            },
+            "url": "{{base_url}}/dictionary/import"
+          }
+        },
+        {
+          "name": "Export Words",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/dictionary/export"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Commands",
+      "item": [
+        {
+          "name": "List Commands",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/commands"
+          }
+        },
+        {
+          "name": "Create Command",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"trigger_phrase\": \"fix grammar\",\n    \"replacement_text\": \"Please review and correct any grammatical errors.\"\n}"
+            },
+            "url": "{{base_url}}/commands"
+          }
+        },
+        {
+          "name": "Get Command",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/commands/1"
+          }
+        },
+        {
+          "name": "Update Command",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"trigger_phrase\": \"fix grammar please\",\n    \"replacement_text\": \"Please review and correct any grammatical errors in this text.\"\n}"
+            },
+            "url": "{{base_url}}/commands/1"
+          }
+        },
+        {
+          "name": "Toggle Command",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/commands/1/toggle"
+          }
+        },
+        {
+          "name": "Delete Command",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/commands/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Snippets",
+      "item": [
+        {
+          "name": "List Snippets",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": {
+              "raw": "{{base_url}}/snippets?category=personal",
+              "host": ["{{base_url}}"],
+              "path": ["snippets"],
+              "query": [{"key": "category", "value": "personal"}]
+            }
+          }
+        },
+        {
+          "name": "Create Snippet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"trigger_phrase\": \"my email\",\n    \"expansion_text\": \"john.doe@example.com\",\n    \"category\": \"personal\"\n}"
+            },
+            "url": "{{base_url}}/snippets"
+          }
+        },
+        {
+          "name": "Get Snippet",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/snippets/1"
+          }
+        },
+        {
+          "name": "Update Snippet",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"trigger_phrase\": \"my email address\",\n    \"expansion_text\": \"john.doe@example.com\",\n    \"category\": \"personal\"\n}"
+            },
+            "url": "{{base_url}}/snippets/1"
+          }
+        },
+        {
+          "name": "Toggle Snippet",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/snippets/1/toggle"
+          }
+        },
+        {
+          "name": "Delete Snippet",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/snippets/1"
+          }
+        },
+        {
+          "name": "Import Snippets",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"snippets\": [\n        {\"trigger_phrase\": \"my phone\", \"expansion_text\": \"+1 555-123-4567\", \"category\": \"personal\"},\n        {\"trigger_phrase\": \"my address\", \"expansion_text\": \"123 Main St, City, State 12345\", \"category\": \"personal\"}\n    ]\n}"
+            },
+            "url": "{{base_url}}/snippets/import"
+          }
+        },
+        {
+          "name": "Export Snippets",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/snippets/export"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Styles",
+      "item": [
+        {
+          "name": "List Styles",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/styles"
+          }
+        },
+        {
+          "name": "Set App Style",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"app_identifier\": \"com.slack.Slack\",\n    \"app_name\": \"Slack\",\n    \"style\": \"casual\"\n}"
+            },
+            "url": "{{base_url}}/styles"
+          }
+        },
+        {
+          "name": "Update App Style",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"app_identifier\": \"com.slack.Slack\",\n    \"app_name\": \"Slack\",\n    \"style\": \"extremely_casual\"\n}"
+            },
+            "url": "{{base_url}}/styles/com.slack.Slack"
+          }
+        },
+        {
+          "name": "Delete App Style",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/styles/com.slack.Slack"
+          }
+        },
+        {
+          "name": "Get Default Style",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/styles/default"
+          }
+        },
+        {
+          "name": "Set Default Style",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"style\": \"casual\"\n}"
+            },
+            "url": "{{base_url}}/styles/default"
+          }
+        }
+      ]
+    },
+    {
+      "name": "History",
+      "item": [
+        {
+          "name": "List History",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": {
+              "raw": "{{base_url}}/history?page=1&per_page=20",
+              "host": ["{{base_url}}"],
+              "path": ["history"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "per_page", "value": "20"},
+                {"key": "date_from", "value": "2026-01-01", "disabled": true},
+                {"key": "date_to", "value": "2026-12-31", "disabled": true},
+                {"key": "app", "value": "Slack", "disabled": true},
+                {"key": "search", "value": "meeting", "disabled": true}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Transcription",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/history/1"
+          }
+        },
+        {
+          "name": "Delete Transcription",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/history/1"
+          }
+        },
+        {
+          "name": "Bulk Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"ids\": [1, 2, 3]\n}"
+            },
+            "url": "{{base_url}}/history"
+          }
+        },
+        {
+          "name": "Export History (JSON)",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": {
+              "raw": "{{base_url}}/history/export?format=json",
+              "host": ["{{base_url}}"],
+              "path": ["history", "export"],
+              "query": [
+                {"key": "format", "value": "json"},
+                {"key": "date_from", "value": "2026-01-01", "disabled": true},
+                {"key": "date_to", "value": "2026-12-31", "disabled": true}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Export History (CSV)",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/history/export?format=csv"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usage",
+      "item": [
+        {
+          "name": "Get Current Usage",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/usage"
+          }
+        },
+        {
+          "name": "Get Usage Stats",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": {
+              "raw": "{{base_url}}/usage/stats?period=month",
+              "host": ["{{base_url}}"],
+              "path": ["usage", "stats"],
+              "query": [{"key": "period", "value": "month", "description": "month or year"}]
+            }
+          }
+        },
+        {
+          "name": "Get Usage History",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": {
+              "raw": "{{base_url}}/usage/history?days=30",
+              "host": ["{{base_url}}"],
+              "path": ["usage", "history"],
+              "query": [{"key": "days", "value": "30"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscription",
+      "item": [
+        {
+          "name": "Get Subscription",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/subscription"
+          }
+        },
+        {
+          "name": "Get Plans",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/subscription/plans"
+          }
+        },
+        {
+          "name": "Create Checkout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"plan\": \"pro\",\n    \"annual\": false\n}"
+            },
+            "url": "{{base_url}}/subscription/checkout"
+          }
+        },
+        {
+          "name": "Get Billing Portal",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/subscription/portal"
+          }
+        },
+        {
+          "name": "Cancel Subscription",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/subscription/cancel"
+          }
+        },
+        {
+          "name": "Resume Subscription",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/subscription/resume"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "item": [
+        {
+          "name": "Get All Settings",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/settings"
+          }
+        },
+        {
+          "name": "Update Settings",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"settings\": {\n        \"default_style\": \"casual\",\n        \"auto_detect_language\": true,\n        \"preferred_language\": \"en\",\n        \"save_history\": true,\n        \"sound_enabled\": true,\n        \"shortcut\": \"cmd+shift+space\"\n    }\n}"
+            },
+            "url": "{{base_url}}/settings"
+          }
+        },
+        {
+          "name": "Get Setting",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/settings/default_style"
+          }
+        },
+        {
+          "name": "Update Setting",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"value\": \"formal\"\n}"
+            },
+            "url": "{{base_url}}/settings/default_style"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Languages",
+      "item": [
+        {
+          "name": "List Languages",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/languages"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Teams",
+      "item": [
+        {
+          "name": "List Teams",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/teams"
+          }
+        },
+        {
+          "name": "Create Team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Engineering Team\"\n}"
+            },
+            "url": "{{base_url}}/teams"
+          }
+        },
+        {
+          "name": "Get Team",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/teams/1"
+          }
+        },
+        {
+          "name": "Update Team",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Dev Team\"\n}"
+            },
+            "url": "{{base_url}}/teams/1"
+          }
+        },
+        {
+          "name": "Delete Team",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/teams/1"
+          }
+        },
+        {
+          "name": "Invite Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"member@example.com\",\n    \"role\": \"member\"\n}"
+            },
+            "url": "{{base_url}}/teams/1/invite"
+          }
+        },
+        {
+          "name": "Switch Team",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/teams/1/switch"
+          }
+        },
+        {
+          "name": "Update Member Role",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"role\": \"admin\"\n}"
+            },
+            "url": "{{base_url}}/teams/1/members/2"
+          }
+        },
+        {
+          "name": "Remove Member",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/teams/1/members/2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shared Dictionary",
+      "item": [
+        {
+          "name": "List Team Dictionary",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": {
+              "raw": "{{base_url}}/teams/1/dictionary?category=tech",
+              "host": ["{{base_url}}"],
+              "path": ["teams", "1", "dictionary"],
+              "query": [
+                {"key": "category", "value": "tech"},
+                {"key": "search", "value": "", "disabled": true}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Team Word",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"word\": \"CompanyName\",\n    \"category\": \"brand\",\n    \"pronunciation\": \"company-name\"\n}"
+            },
+            "url": "{{base_url}}/teams/1/dictionary"
+          }
+        },
+        {
+          "name": "Update Team Word",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"word\": \"CompanyName\",\n    \"category\": \"brand\",\n    \"pronunciation\": \"COM-pany-name\"\n}"
+            },
+            "url": "{{base_url}}/teams/1/dictionary/1"
+          }
+        },
+        {
+          "name": "Delete Team Word",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/teams/1/dictionary/1"
+          }
+        },
+        {
+          "name": "Import Team Dictionary",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Accept", "value": "application/json"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"words\": [\n        {\"word\": \"ProductName\", \"category\": \"product\"},\n        {\"word\": \"FeatureName\", \"category\": \"product\"}\n    ]\n}"
+            },
+            "url": "{{base_url}}/teams/1/dictionary/import"
+          }
+        },
+        {
+          "name": "Export Team Dictionary",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": "{{base_url}}/teams/1/dictionary/export"
+          }
+        }
+      ]
+    }
+  ]
+}

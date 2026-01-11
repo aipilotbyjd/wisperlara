@@ -1,0 +1,65 @@
+<?php
+
+return [
+    'free' => [
+        'name' => 'Free',
+        'price_monthly' => 0,
+        'price_yearly' => 0,
+        'stripe_price_monthly' => null,
+        'stripe_price_yearly' => null,
+        'minutes_limit' => 30,
+        'features' => [
+            'Basic transcription',
+            'Groq Whisper only',
+            '3 style modes',
+            '10 dictionary words',
+            '5 custom commands',
+        ],
+    ],
+    'pro' => [
+        'name' => 'Pro',
+        'price_monthly' => 8,
+        'price_yearly' => 80,
+        'stripe_price_monthly' => env('STRIPE_PRICE_PRO_MONTHLY'),
+        'stripe_price_yearly' => env('STRIPE_PRICE_PRO_YEARLY'),
+        'minutes_limit' => 300,
+        'features' => [
+            'Everything in Free',
+            'All STT providers',
+            'All LLM providers',
+            'Unlimited dictionary',
+            'Unlimited commands',
+            'History sync',
+            'Priority support',
+        ],
+    ],
+    'business' => [
+        'name' => 'Business',
+        'price_monthly' => 15,
+        'price_yearly' => 150,
+        'stripe_price_monthly' => env('STRIPE_PRICE_BUSINESS_MONTHLY'),
+        'stripe_price_yearly' => env('STRIPE_PRICE_BUSINESS_YEARLY'),
+        'minutes_limit' => -1,
+        'features' => [
+            'Everything in Pro',
+            'Unlimited minutes',
+            'Team features',
+            'Shared dictionary',
+            'Dedicated support',
+        ],
+    ],
+    'enterprise' => [
+        'name' => 'Enterprise',
+        'price_monthly' => null,
+        'price_yearly' => null,
+        'stripe_price_monthly' => null,
+        'stripe_price_yearly' => null,
+        'minutes_limit' => -1,
+        'features' => [
+            'Everything in Business',
+            'Custom integrations',
+            'SLA guarantee',
+            'Dedicated account manager',
+        ],
+    ],
+];
