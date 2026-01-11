@@ -13,9 +13,12 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
-            'full_name' => $this->first_name . ' ' . $this->last_name,
+            'full_name' => $this->full_name,
             'email' => $this->email,
             'email_verified_at' => $this->email_verified_at,
+            'plan' => $this->plan,
+            'preferred_language' => $this->preferred_language,
+            'auto_detect_language' => $this->auto_detect_language,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

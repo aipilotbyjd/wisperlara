@@ -12,7 +12,6 @@ use App\Http\Requests\Auth\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,8 +30,6 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-        event(new Registered($user));
 
         $token = $user->createToken('auth_token')->accessToken;
 
@@ -156,10 +153,10 @@ class AuthController extends Controller
             ]);
         }
 
-        $request->user()->sendEmailVerificationNotification();
-
+        // For API-only apps, verification is handled differently
+        // You can implement custom email sending here if needed
         return response()->json([
-            'message' => 'Verification link sent.',
+            'message' => 'Verification process initiated.',
         ]);
     }
 
@@ -172,7 +169,6 @@ class AuthController extends Controller
         if ($request->has('email') && $request->email !== $user->getOriginal('email')) {
             $user->email_verified_at = null;
             $user->save();
-            $user->sendEmailVerificationNotification();
         }
 
         return response()->json([
